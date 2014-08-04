@@ -1,7 +1,7 @@
 require "sinatra"
 require "gschool_database_connection"
 require "rack-flash"
-
+require "active_record"
 require "./lib/to_do_item"
 require "./lib/user"
 
@@ -67,6 +67,19 @@ class ToDoApp < Sinatra::Application
     redirect "/"
   end
 
+  post "/edit/:id" do
+    current_todo = ToDoItem.find_by(id: params[:id])
+    erb :edit_page, locals: {current_todo: current_todo}
+  end
+
+  patch "/todos/:id" do
+    ToDoItem.update(params[:id], body: params[:body])
+    flash[:notice] = "ToDo Updated"
+    redirect "/"
+  end
+
+
+
   private
 
   def authenticate_user
@@ -76,5 +89,4 @@ class ToDoApp < Sinatra::Application
   def current_user
     User.find_by(id: session[:user_id])
   end
-
 end

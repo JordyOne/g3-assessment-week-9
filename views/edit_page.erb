@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-lg-4" id="new_todo_form">
+    <form method="post" action="/todos/<%= params[:id]%>">
+      <ul>
+        <li>
+          <label for="body">What do you need to do?</label>
+          <textarea type="text" col="40" row="5" name="body" id="body" class="form-control"><%= current_todo.body %>
+          </textarea><br>
+          <input type="hidden" name="_method" value="patch"/>
+          <button>Update ToDo</button>
+        </li>
+        <li>
+        </li>
+      </ul>
+    </form>
+  </div>
+</div>
