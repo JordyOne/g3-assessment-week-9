@@ -17,9 +17,9 @@ class ToDoApp < Sinatra::Application
   get "/" do
     if current_user
       user = current_user
-
       users = User.where("id != #{user.id}")
-      todos = ToDoItem.all
+      todos = ToDoItem.where("id = #{user.id}")
+
       erb :signed_in, locals: {current_user: user, users: users, todos: todos}
     else
       erb :signed_out
@@ -80,6 +80,7 @@ class ToDoApp < Sinatra::Application
 
   post "/complete/:id" do
     p ToDoItem.find_by(id: params[:id]).destroy
+    flash[:notice] = "ToDo completed"
     redirect "/"
   end
 
