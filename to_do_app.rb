@@ -78,6 +78,10 @@ class ToDoApp < Sinatra::Application
     redirect "/"
   end
 
+  post "/complete/:id" do
+    p ToDoItem.find_by(id: params[:id]).destroy
+    redirect "/"
+  end
 
 
   private
